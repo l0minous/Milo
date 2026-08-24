@@ -1,0 +1,441 @@
+/* ==========================================================================
+   Notion Early Career — Interview Guide
+   Skeleton stylesheet. Structural/visual foundation only — this file is
+   intentionally kept calm (opacity/transform reveal on scroll) so that
+   specific components can be swapped for richer animations next.
+   ========================================================================== */
+
+:root {
+  /* Notion neutrals */
+  --n-black: #191919;
+  --n-text: #37352f;
+  --n-text-secondary: #787774;
+  --n-bg: #ffffff;
+  --n-bg-secondary: #f7f6f5;
+  --n-bg-tertiary: #f1f1ef;
+  --n-border: #e9e9e7;
+
+  /* Notion accent palette (muted, matches Notion's block/tag colors) */
+  --n-red: #e03e3e;
+  --n-red-bg: #fbe4e4;
+  --n-orange: #d9730d;
+  --n-orange-bg: #faebdd;
+  --n-yellow: #dfab01;
+  --n-yellow-bg: #fbf3db;
+  --n-green: #0f7b6c;
+  --n-green-bg: #ddedea;
+  --n-blue: #0b6e99;
+  --n-blue-bg: #ddebf1;
+  --n-purple: #6940a5;
+  --n-purple-bg: #eae4f2;
+  --n-gray: #9b9a97;
+  --n-gray-bg: #ebeced;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --font-sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
+    "Segoe UI Symbol";
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--n-text);
+  background: var(--n-bg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; }
+
+code {
+  font-family: var(--font-mono);
+  background: var(--n-bg-tertiary);
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+/* ---------- Nav ---------- */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: saturate(180%) blur(8px);
+  border-bottom: 1px solid var(--n-border);
+}
+
+.nav__inner {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav__brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.nav__wordmark {
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  color: var(--n-black);
+}
+
+.nav__links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav__link {
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--n-text-secondary);
+  transition: color 0.15s var(--ease);
+}
+
+.nav__link:hover { color: var(--n-black); }
+
+/* ---------- Layout ---------- */
+main { max-width: 780px; margin: 0 auto; padding: 0 24px; }
+
+.hero { padding: 64px 0 40px; }
+
+.eyebrow {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--n-text-secondary);
+  margin: 0 0 12px;
+}
+
+.hero__title {
+  font-size: clamp(34px, 5vw, 52px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  color: var(--n-black);
+  margin: 0 0 20px;
+}
+
+.hero__lede {
+  font-size: 17px;
+  color: var(--n-text);
+  max-width: 62ch;
+  margin: 0 0 28px;
+}
+
+.hero__lede a {
+  color: var(--n-blue);
+  text-decoration: underline;
+  text-decoration-color: var(--n-blue-bg);
+  text-underline-offset: 2px;
+}
+
+/* ---------- Video card ---------- */
+.video-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-decoration: none;
+  border: 1px solid var(--n-border);
+  border-radius: var(--radius-lg);
+  padding: 14px;
+  background: var(--n-bg-secondary);
+  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+
+.video-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.video-card__thumb {
+  flex: 0 0 auto;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-md);
+  background: var(--n-black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-card__play {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--n-red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-card__meta { display: flex; flex-direction: column; gap: 4px; }
+
+.video-card__label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--n-text-secondary);
+}
+
+.video-card__title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--n-black);
+}
+
+/* ---------- Sections ---------- */
+.section { padding: 48px 0; border-top: 1px solid var(--n-border); }
+
+.section__icon { font-size: 28px; display: block; margin-bottom: 12px; }
+
+.section__title {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--n-black);
+  margin: 0 0 16px;
+}
+
+.section__title--lg { font-size: 30px; margin-bottom: 24px; }
+
+.section__body p {
+  margin: 0 0 14px;
+  color: var(--n-text);
+}
+
+/* ---------- Callouts (Notion-style) ---------- */
+.callout {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  margin: 20px 0;
+  font-size: 14.5px;
+}
+
+.callout p { margin: 0; }
+
+.callout__icon { font-size: 18px; line-height: 1.4; flex: 0 0 auto; }
+
+.callout--blue { background: var(--n-blue-bg); color: #0b4a63; }
+.callout--yellow { background: var(--n-yellow-bg); color: #6b5301; }
+.callout--gray { background: var(--n-bg-tertiary); color: var(--n-text); }
+
+/* ---------- Timeline ---------- */
+.timeline {
+  list-style: none;
+  margin: 32px 0 0;
+  padding: 0;
+  position: relative;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 21px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: var(--n-border);
+}
+
+.timeline__item {
+  position: relative;
+  display: flex;
+  gap: 20px;
+  padding-bottom: 40px;
+}
+
+.timeline__item:last-child { padding-bottom: 0; }
+
+.timeline__marker {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--n-bg);
+  border: 1px solid var(--n-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.timeline__emoji { font-size: 20px; }
+
+.timeline__content { flex: 1 1 auto; padding-top: 4px; }
+
+.timeline__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.timeline__title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--n-black);
+  margin: 0;
+}
+
+.timeline__content p {
+  margin: 0 0 12px;
+  color: var(--n-text);
+  font-size: 15px;
+}
+
+/* ---------- Badges ---------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+
+.badge--blue { background: var(--n-blue-bg); color: var(--n-blue); }
+.badge--orange { background: var(--n-orange-bg); color: var(--n-orange); }
+.badge--red { background: var(--n-red-bg); color: var(--n-red); }
+.badge--green { background: var(--n-green-bg); color: var(--n-green); }
+.badge--purple { background: var(--n-purple-bg); color: var(--n-purple); }
+.badge--gray { background: var(--n-gray-bg); color: #63625d; }
+
+/* ---------- Sub-cards (nested interviews) ---------- */
+.subcard {
+  border: 1px solid var(--n-border);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  margin-top: 16px;
+  background: var(--n-bg-secondary);
+}
+
+.subcard__title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15.5px;
+  font-weight: 700;
+  color: var(--n-black);
+  margin: 0 0 12px;
+}
+
+.subcard__list {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.subcard__list li { font-size: 14.5px; color: var(--n-text); }
+
+.subcard__list a {
+  color: var(--n-blue);
+  text-decoration: underline;
+  text-decoration-color: var(--n-blue-bg);
+}
+
+/* ---------- File chip ---------- */
+.file-chip {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 1px dashed var(--n-border);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  color: var(--n-text);
+  font-size: 13.5px;
+  background: var(--n-bg);
+}
+
+.file-chip__hint { color: var(--n-text-secondary); margin-left: auto; font-size: 12.5px; }
+
+/* ---------- Misc links ---------- */
+.text-link {
+  display: inline-block;
+  margin-top: 24px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--n-text-secondary);
+  text-decoration: none;
+}
+
+.text-link:hover { color: var(--n-black); }
+
+/* ---------- Footer ---------- */
+.footer {
+  border-top: 1px solid var(--n-border);
+  margin-top: 24px;
+}
+
+.footer__inner {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--n-text-secondary);
+  font-size: 13.5px;
+}
+
+/* ==========================================================================
+   Reveal-on-scroll hooks
+   `.reveal` is the generic entry animation applied to top-level blocks;
+   `.timeline__item` gets it individually with a stagger via inline delay
+   set in script.js. Swap/extend these rules when wiring up richer
+   per-component animations.
+   ========================================================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .video-card { transition: none !important; }
+  .reveal { opacity: 1; transform: none; }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 560px) {
+  .nav__links { gap: 12px; }
+  .hero { padding: 40px 0 28px; }
+  .timeline::before { left: 19px; }
+  .timeline__marker { width: 40px; height: 40px; }
+  .timeline__item { gap: 14px; }
+}
