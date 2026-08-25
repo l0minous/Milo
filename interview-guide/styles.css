@@ -486,8 +486,11 @@ img.callout__icon { width: auto; height: 28px; margin-top: -3px; }
 /* Peaks near the clouds' fixed 0.26 so the sparkles read as the same
    atmosphere rather than as darker stray marks in the margin. */
 @keyframes doodle-twinkle {
-  0%, 100% { opacity: 0.13; transform: scale(0.82) rotate(-4deg); }
-  50% { opacity: 0.4; transform: scale(1) rotate(0deg); }
+  0%   { opacity: 0.13; transform: scale(0.82) rotate(-4deg); }
+  8%   { opacity: 0.40; transform: scale(1) rotate(0deg); }
+  20%  { opacity: 0.20; transform: scale(0.93) rotate(-1deg); }
+  28%  { opacity: 0.34; transform: scale(0.99) rotate(1deg); }
+  100% { opacity: 0.13; transform: scale(0.82) rotate(-4deg); }
 }
 
 .doodle-float {
@@ -504,8 +507,11 @@ img.callout__icon { width: auto; height: 28px; margin-top: -3px; }
 /* A sparkle used as a section accent is foreground, not atmosphere, so it
    pulses across a much stronger opacity range than the ambient hero ones. */
 @keyframes doodle-twinkle-accent {
-  0%, 100% { opacity: 0.55; transform: scale(0.9) rotate(-3deg); }
-  50% { opacity: 1; transform: scale(1) rotate(0deg); }
+  0%   { opacity: 0.55; transform: scale(0.9) rotate(-3deg); }
+  8%   { opacity: 1;    transform: scale(1) rotate(0deg); }
+  20%  { opacity: 0.68; transform: scale(0.94) rotate(-1deg); }
+  28%  { opacity: 0.92; transform: scale(0.99) rotate(1deg); }
+  100% { opacity: 0.55; transform: scale(0.9) rotate(-3deg); }
 }
 
 .doodle-twinkle--accent {
@@ -558,15 +564,24 @@ img.callout__icon { width: auto; height: 28px; margin-top: -3px; }
   transform: rotate(0deg) scale(1);
 }
 
-/* The lightbulb keeps glowing gently once it has been drawn on. */
-@keyframes doodle-bulb-glow {
-  0%, 100% { opacity: 0.72; }
-  50% { opacity: 1; }
+/* The lightbulb lights up as it finishes drawing, then holds. A permanent
+   pulse is motion in peripheral vision for as long as the page is open, right
+   beside body copy people are trying to read — a bulb that switches on once
+   makes the same point and then gets out of the way. drop-shadow traces the
+   PNG's own alpha, so the glow follows the hand-drawn outline instead of
+   floating a disc behind it; it is also the one place the colour lost with
+   currentColor (raster ink can't inherit it) comes back. `both` holds the end
+   state, so this never re-runs. */
+.doodle-bulb { --bulb-glow: rgba(223, 171, 1, 0.55); }
+.callout--gray .doodle-bulb { --bulb-glow: rgba(120, 119, 116, 0.45); }
+
+@keyframes doodle-bulb-lit {
+  from { filter: drop-shadow(0 0 0 transparent); }
+  to   { filter: drop-shadow(0 0 5px var(--bulb-glow)); }
 }
 
 .doodle-bulb.is-visible {
-  animation: doodle-bulb-glow 2.6s ease-in-out infinite;
-  animation-delay: 1.1s;
+  animation: doodle-bulb-lit 550ms ease-out 480ms both;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -581,6 +596,10 @@ img.callout__icon { width: auto; height: 28px; margin-top: -3px; }
 
   .doodle-twinkle { opacity: 0.4; }
 
+  /* The glow is state, not motion — assert it directly since its animation
+     (which carried the end state via `both`) is switched off above. */
+  .doodle-bulb { filter: drop-shadow(0 0 5px var(--bulb-glow)); }
+
   .doodle-ink,
   .doodle-bulb,
   .doodle-ink--pop {
@@ -590,6 +609,30 @@ img.callout__icon { width: auto; height: 28px; margin-top: -3px; }
     -webkit-clip-path: none !important;
     clip-path: none !important;
   }
+}
+
+/* Windows High Contrast / forced-colors: these doodles are black pixels in a
+   PNG, so no CSS can recolour them — on a forced dark canvas they simply
+   disappear. The ambient hero field is pure decoration, so it goes rather than
+   leaving invisible gaps. The doodles that sit in content keep their own
+   colours via forced-color-adjust and get an explicit light plate so the ink
+   still reads. */
+@media (forced-colors: active) {
+  .doodle-field { display: none; }
+
+  .timeline__marker,
+  .section__icon--sparkles,
+  img.callout__icon {
+    forced-color-adjust: none;
+    background: #ffffff;
+  }
+
+  img.callout__icon {
+    border-radius: 3px;
+    padding: 1px 2px;
+  }
+
+  .doodle-bulb { filter: none; }
 }
 
 /* ---------- Responsive ---------- */
