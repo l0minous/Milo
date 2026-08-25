@@ -57,7 +57,15 @@
         <img class="doodle doodle-twinkle doodle--lower" src="assets/doodles/sparkle-6.png" alt="" width="32" height="53" style="--x:90%; --y:50%; --w:11px; --delay:1.6s; --dur:2.4s">
       </div>
       <p class="eyebrow">Careers &middot; Engineering</p>
-      <h1 class="hero__title">Software Engineer,<br/>Early Career</h1>
+      <!-- The handwritten title from the sketch stands in for the typeset one.
+           The alt text carries the real heading, so the h1 still has a text
+           accessible name for screen readers and search, and it renders as
+           plain text if the image ever fails to load. -->
+      <h1 class="hero__title">
+        <img class="hero__title-ink doodle-ink" src="assets/doodles/title.png"
+             alt="Notion Early Career Software Engineer" width="482" height="149"
+             fetchpriority="high" decoding="async">
+      </h1>
       <p class="hero__lede">
         Our goal is to create an environment where you can showcase your strengths. We hope this
         guide and our <a href="https://app.notion.com/47f38b00bc0e4ceeaa56007e12e61d8b?pvs=21" target="_blank" rel="noopener">Interview Homepage</a>

@@ -134,12 +134,24 @@ main { max-width: 780px; margin: 0 auto; padding: 0 24px; }
 }
 
 .hero__title {
-  font-size: clamp(34px, 5vw, 52px);
+  /* Font styles are kept as the fallback for when the image cannot render
+     (broken src, images disabled) — the alt text is then what shows. */
+  font-size: clamp(30px, 4.4vw, 44px);
   line-height: 1.08;
   letter-spacing: -0.02em;
   font-weight: 700;
   color: var(--n-black);
-  margin: 0 0 20px;
+  margin: 0 0 22px;
+}
+
+/* The crop holds 482px of real pixels, so it is pin-sharp at 1x up to that
+   width but upscales on a 2x display — visible on something this large.
+   Capping at 360px keeps the worst case to ~1.5x, which the soft marker
+   strokes absorb without looking like a blurry image. */
+.hero__title-ink {
+  display: block;
+  width: min(360px, 78%);
+  height: auto;
 }
 
 .hero__lede {
@@ -551,6 +563,28 @@ img.callout__icon { width: auto; height: 28px; margin-top: -3px; }
   .doodle-bulb.is-visible {
     -webkit-clip-path: inset(0 0 0 0);
     clip-path: inset(0 0 0 0);
+  }
+}
+
+/* The hero title is 10x the size of a marker icon, so the shared ink entry is
+   wrong for it twice over: a -5deg tilt that is a subtle wobble on a 38px
+   drawing is a conspicuous slant on a 360px headline, and a 0.62s sweep that
+   suits a small icon crosses this much handwriting too fast to read as
+   writing. Longer sweep, barely any tilt. */
+.js .hero__title-ink {
+  transform: rotate(-1.2deg) scale(0.985);
+}
+
+.hero__title-ink.is-visible {
+  transform: rotate(0deg) scale(1);
+}
+
+@supports (clip-path: inset(0 0 0 0)) {
+  .js .hero__title-ink {
+    transition: opacity 0.3s linear,
+                transform 0.9s var(--ease),
+                -webkit-clip-path 1.05s var(--ease-ink),
+                clip-path 1.05s var(--ease-ink);
   }
 }
 
