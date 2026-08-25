@@ -1,0 +1,194 @@
+{
+  "person-laptop": {
+    "file": "person-laptop.png",
+    "src_box": [
+      314,
+      308,
+      474,
+      457
+    ],
+    "w": 161,
+    "h": 150,
+    "ink": 5730
+  },
+  "party-popper": {
+    "file": "party-popper.png",
+    "src_box": [
+      576,
+      347,
+      717,
+      502
+    ],
+    "w": 142,
+    "h": 156,
+    "ink": 3740
+  },
+  "lightbulb": {
+    "file": "lightbulb.png",
+    "src_box": [
+      442,
+      571,
+      529,
+      671
+    ],
+    "w": 88,
+    "h": 101,
+    "ink": 1041
+  },
+  "house": {
+    "file": "house.png",
+    "src_box": [
+      239,
+      640,
+      340,
+      742
+    ],
+    "w": 102,
+    "h": 103,
+    "ink": 2600
+  },
+  "cloud-1": {
+    "file": "cloud-1.png",
+    "src_box": [
+      787,
+      332,
+      910,
+      381
+    ],
+    "w": 124,
+    "h": 50,
+    "ink": 1256
+  },
+  "cloud-2": {
+    "file": "cloud-2.png",
+    "src_box": [
+      953,
+      309,
+      1074,
+      358
+    ],
+    "w": 122,
+    "h": 50,
+    "ink": 1245
+  },
+  "cloud-3": {
+    "file": "cloud-3.png",
+    "src_box": [
+      1146,
+      332,
+      1310,
+      377
+    ],
+    "w": 165,
+    "h": 46,
+    "ink": 1490
+  },
+  "cloud-4": {
+    "file": "cloud-4.png",
+    "src_box": [
+      866,
+      408,
+      967,
+      458
+    ],
+    "w": 102,
+    "h": 51,
+    "ink": 1116
+  },
+  "cloud-5": {
+    "file": "cloud-5.png",
+    "src_box": [
+      1021,
+      398,
+      1100,
+      442
+    ],
+    "w": 80,
+    "h": 45,
+    "ink": 787
+  },
+  "sparkle-1": {
+    "file": "sparkle-1.png",
+    "src_box": [
+      1183,
+      403,
+      1220,
+      454
+    ],
+    "w": 38,
+    "h": 52,
+    "ink": 378
+  },
+  "sparkle-2": {
+    "file": "sparkle-2.png",
+    "src_box": [
+      1081,
+      439,
+      1113,
+      487
+    ],
+    "w": 33,
+    "h": 49,
+    "ink": 286
+  },
+  "sparkle-3": {
+    "file": "sparkle-3.png",
+    "src_box": [
+      1139,
+      455,
+      1173,
+      513
+    ],
+    "w": 35,
+    "h": 59,
+    "ink": 425
+  },
+  "sparkle-4": {
+    "file": "sparkle-4.png",
+    "src_box": [
+      1022,
+      485,
+      1058,
+      563
+    ],
+    "w": 37,
+    "h": 79,
+    "ink": 433
+  },
+  "sparkle-5": {
+    "file": "sparkle-5.png",
+    "src_box": [
+      1191,
+      500,
+      1226,
+      571
+    ],
+    "w": 36,
+    "h": 72,
+    "ink": 425
+  },
+  "sparkle-6": {
+    "file": "sparkle-6.png",
+    "src_box": [
+      1088,
+      509,
+      1119,
+      561
+    ],
+    "w": 32,
+    "h": 53,
+    "ink": 323
+  },
+  "title": {
+    "file": "title.png",
+    "src_box": [
+      680,
+      599,
+      1161,
+      747
+    ],
+    "w": 482,
+    "h": 149,
+    "ink": 10862
+  }
+}

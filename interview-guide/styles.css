@@ -211,9 +211,10 @@ main { max-width: 780px; margin: 0 auto; padding: 0 24px; }
 
 .section__icon { font-size: 28px; display: block; margin-bottom: 12px; }
 
-.section__icon--sparkles { display: flex; gap: 6px; align-items: flex-end; }
-.section__icon--sparkles .doodle { width: 22px; height: 22px; color: var(--n-yellow); }
-.section__icon--sparkles .doodle:last-child { width: 15px; height: 15px; }
+/* Sized by height with width:auto — the crops have their own aspect ratios. */
+.section__icon--sparkles { display: flex; gap: 8px; align-items: flex-end; }
+.section__icon--sparkles .doodle { width: auto; height: 26px; }
+.section__icon--sparkles .doodle:last-child { height: 17px; }
 
 .section__title {
   font-size: 24px;
@@ -245,7 +246,7 @@ main { max-width: 780px; margin: 0 auto; padding: 0 24px; }
 
 .callout__icon { font-size: 18px; line-height: 1.4; flex: 0 0 auto; }
 
-svg.callout__icon { width: 20px; height: 29px; color: currentColor; margin-top: -2px; }
+img.callout__icon { width: auto; height: 28px; margin-top: -3px; }
 
 .callout--blue { background: var(--n-blue-bg); color: #0b4a63; }
 .callout--yellow { background: var(--n-yellow-bg); color: #6b5301; }
@@ -262,7 +263,7 @@ svg.callout__icon { width: 20px; height: 29px; color: currentColor; margin-top: 
 .timeline::before {
   content: "";
   position: absolute;
-  left: 21px;
+  left: 27px;
   top: 8px;
   bottom: 8px;
   width: 2px;
@@ -280,8 +281,8 @@ svg.callout__icon { width: 20px; height: 29px; color: currentColor; margin-top: 
 
 .timeline__marker {
   flex: 0 0 auto;
-  width: 44px;
-  height: 44px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   background: var(--n-bg);
   border: 1px solid var(--n-border);
@@ -291,9 +292,11 @@ svg.callout__icon { width: 20px; height: 29px; color: currentColor; margin-top: 
   z-index: 1;
 }
 
-.timeline__emoji { font-size: 20px; }
+.timeline__emoji { font-size: 22px; }
 
-.doodle-marker { width: 27px; height: 27px; color: var(--n-black); }
+/* 38px, not smaller: below ~36px the pen detail in the hand-drawn crops
+   (the N on the laptop, the popper's confetti) muddies on a 1x display. */
+.doodle-marker { width: auto; height: 38px; }
 
 .timeline__content { flex: 1 1 auto; padding-top: 4px; }
 
@@ -435,13 +438,19 @@ svg.callout__icon { width: 20px; height: 29px; color: currentColor; margin-top: 
 }
 
 /* ==========================================================================
-   Doodle icons — hand-drawn accents from the reference sketch
-   Base sizing/color, ambient hero drift + twinkle, and the "drawn on"
-   stroke reveal (.doodle-draw) that piggybacks on the same .is-visible
-   toggle the reveal system above already sets on scroll.
+   Doodle icons — real crops from the source sketch
+   These are raster <img> elements cut straight out of the hand-drawn PNG
+   (see assets/doodles/_source/), so the SVG stroke-dashoffset "draw on"
+   trick no longer applies. Ink appearing is instead simulated with a
+   clip-path wipe, which reads like a pen sweeping across the drawing.
+   Everything keys off the .is-visible class the reveal system already sets.
    ========================================================================== */
-.doodle { overflow: visible; }
+.doodle {
+  display: block;
+  max-width: 100%;
+}
 
+/* ---------- Ambient hero field ---------- */
 .doodle-field {
   position: absolute;
   inset: 0;
@@ -454,87 +463,121 @@ svg.callout__icon { width: 20px; height: 29px; color: currentColor; margin-top: 
   position: absolute;
   left: var(--x);
   top: var(--y);
-  width: calc(46px * var(--s, 1));
-  height: calc(46px * var(--s, 1));
-  color: var(--n-black);
-  opacity: 0.3;
+  width: var(--w, 60px);
+  height: auto;
 }
 
 @keyframes doodle-drift {
   0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-8px) rotate(2deg); }
+  50% { transform: translateY(-9px) rotate(1.5deg); }
 }
 
+/* Peaks near the clouds' fixed 0.26 so the sparkles read as the same
+   atmosphere rather than as darker stray marks in the margin. */
 @keyframes doodle-twinkle {
-  0%, 100% { opacity: 0.25; transform: scale(0.85); }
-  50% { opacity: 0.85; transform: scale(1); }
+  0%, 100% { opacity: 0.13; transform: scale(0.82) rotate(-4deg); }
+  50% { opacity: 0.4; transform: scale(1) rotate(0deg); }
 }
 
-.doodle-float { animation: doodle-drift var(--dur, 7s) ease-in-out infinite; animation-delay: var(--delay, 0s); }
-.doodle-twinkle { animation: doodle-twinkle var(--dur, 2.4s) ease-in-out infinite; animation-delay: var(--delay, 0s); }
-
-/* Stroke "drawn on" reveal — pairs pathLength="1" (set in the markup) with
-   a dasharray/dashoffset transition, so it just works with the reveal
-   system's existing .is-visible toggle. */
-.doodle-draw path,
-.doodle-draw line,
-.doodle-draw circle,
-.doodle-draw rect {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  transition: stroke-dashoffset 0.8s var(--ease);
+.doodle-float {
+  opacity: 0.26;
+  animation: doodle-drift var(--dur, 7s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
 }
 
-.is-visible .doodle-draw path,
-.is-visible .doodle-draw line,
-.is-visible .doodle-draw circle,
-.is-visible .doodle-draw rect {
-  stroke-dashoffset: 0;
+.doodle-twinkle {
+  animation: doodle-twinkle var(--dur, 2.4s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
 }
 
-/* Lightbulb: once drawn, its glow rays pulse gently forever. */
-@keyframes doodle-glow {
-  0%, 100% { opacity: 0.35; }
+/* A sparkle used as a section accent is foreground, not atmosphere, so it
+   pulses across a much stronger opacity range than the ambient hero ones. */
+@keyframes doodle-twinkle-accent {
+  0%, 100% { opacity: 0.55; transform: scale(0.9) rotate(-3deg); }
+  50% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+.doodle-twinkle--accent {
+  animation-name: doodle-twinkle-accent;
+}
+
+/* ---------- "Ink appearing" entry ----------
+   Base state is a plain fade + settle, which every engine can do. The
+   directional wipe is layered on only where clip-path is actually
+   supported, so a browser without it still shows the drawing rather than
+   clipping it away to nothing. */
+.doodle-ink,
+.doodle-bulb {
+  opacity: 0;
+  transform: rotate(-5deg) scale(0.92);
+  transition: opacity 0.4s linear, transform 0.7s var(--ease);
+}
+
+.is-visible .doodle-ink,
+.is-visible .doodle-bulb {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+@supports (clip-path: inset(0 0 0 0)) {
+  .doodle-ink,
+  .doodle-bulb {
+    -webkit-clip-path: inset(0 100% 0 0);
+    clip-path: inset(0 100% 0 0);
+    transition: opacity 0.25s linear,
+                transform 0.7s var(--ease),
+                -webkit-clip-path 0.75s var(--ease),
+                clip-path 0.75s var(--ease);
+  }
+
+  .is-visible .doodle-ink,
+  .is-visible .doodle-bulb {
+    -webkit-clip-path: inset(0 0 0 0);
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* The party popper earns a bouncier settle than the other markers. */
+.doodle-ink--pop {
+  transform: rotate(-12deg) scale(0.8);
+  transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.is-visible .doodle-ink--pop {
+  transform: rotate(0deg) scale(1);
+}
+
+/* The lightbulb keeps glowing gently once it has been drawn on. */
+@keyframes doodle-bulb-glow {
+  0%, 100% { opacity: 0.72; }
   50% { opacity: 1; }
 }
 
-.is-visible .doodle-lightbulb .glow-ray {
-  animation: doodle-glow 1.8s ease-in-out infinite;
-  animation-delay: 1.4s;
-}
-
-/* Party popper: confetti pieces pop outward from the cone after it draws. */
-.confetti-piece {
-  transform: translate(0, 0) scale(0);
-  opacity: 0;
-  transform-box: fill-box;
-  transform-origin: center;
-  transition: transform 0.45s var(--ease), opacity 0.3s linear;
-  transition-delay: var(--delay, 0.5s);
-}
-
-.is-visible .confetti-piece {
-  transform: translate(var(--dx), var(--dy)) scale(1);
-  opacity: 1;
+.is-visible .doodle-bulb {
+  animation: doodle-bulb-glow 2.6s ease-in-out infinite;
+  animation-delay: 1.1s;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .reveal, .video-card { transition: none !important; }
   .reveal { opacity: 1; transform: none; }
 
-  .doodle-float, .doodle-twinkle, .is-visible .doodle-lightbulb .glow-ray {
+  .doodle-float,
+  .doodle-twinkle,
+  .is-visible .doodle-bulb {
     animation: none !important;
   }
 
-  .doodle-draw path, .doodle-draw line, .doodle-draw circle, .doodle-draw rect,
-  .confetti-piece {
-    transition: none !important;
-    stroke-dashoffset: 0 !important;
-  }
+  .doodle-twinkle { opacity: 0.4; }
 
-  .confetti-piece {
-    transform: translate(var(--dx), var(--dy)) scale(1) !important;
+  .doodle-ink,
+  .doodle-bulb,
+  .doodle-ink--pop {
+    transition: none !important;
     opacity: 1 !important;
+    transform: none !important;
+    -webkit-clip-path: none !important;
+    clip-path: none !important;
   }
 }
 
@@ -542,7 +585,13 @@ svg.callout__icon { width: 20px; height: 29px; color: currentColor; margin-top: 
 @media (max-width: 560px) {
   .nav__links { gap: 12px; }
   .hero { padding: 40px 0 28px; }
-  .timeline::before { left: 19px; }
-  .timeline__marker { width: 40px; height: 40px; }
+  .timeline::before { left: 23px; }
+  .timeline__marker { width: 48px; height: 48px; }
+  .doodle-marker { height: 33px; }
   .timeline__item { gap: 14px; }
+
+  /* Narrow screens reflow the hero text into the right margin, so only the
+     doodles in the clear band above the eyebrow survive. */
+  .doodle--lower { display: none; }
+  .doodle-float { opacity: 0.2; }
 }
