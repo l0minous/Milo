@@ -9,6 +9,56 @@
 </head>
 <body>
 
+  <!-- ============ DOODLE ICON LIBRARY ============
+       Hand-drawn accents redrawn from the reference sketch (person at a
+       laptop with a Notion mark, a party popper, clouds, twinkle sparkles,
+       a lightbulb, a house). Each shape carries pathLength="1" so CSS can
+       animate stroke-dashoffset as a "drawn on" reveal — see .doodle-draw
+       in styles.css. Defined once, instanced everywhere via <use>. -->
+  <svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
+    <defs>
+      <symbol id="doodle-cloud" viewBox="0 0 80 46">
+        <path pathLength="1" d="M16 38 C7 38 5 29 12 25 C9 16 20 11 28 15 C31 5 47 4 52 14 C63 12 70 21 65 29 C71 33 66 40 57 38 Z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+
+      <symbol id="doodle-sparkle" viewBox="0 0 24 24">
+        <line pathLength="1" x1="12" y1="1" x2="12" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <line pathLength="1" x1="2" y1="6" x2="22" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <line pathLength="1" x1="22" y1="6" x2="2" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </symbol>
+
+      <symbol id="doodle-lightbulb" viewBox="0 0 40 58">
+        <path pathLength="1" d="M20 5 C10 5 6 13 6 20 C6 26 9 30 13 33 L13 39 L27 39 L27 33 C31 30 34 26 34 20 C34 13 30 5 20 5 Z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path pathLength="1" d="M15 18 L18 25 L22 16 L25 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="transition-delay:.2s"/>
+        <line pathLength="1" x1="14" y1="43" x2="26" y2="43" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="transition-delay:.32s"/>
+        <line pathLength="1" x1="15" y1="48" x2="25" y2="48" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="transition-delay:.4s"/>
+        <line pathLength="1" x1="16" y1="53" x2="24" y2="53" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="transition-delay:.48s"/>
+        <line class="glow-ray" pathLength="1" x1="20" y1="0" x2="20" y2="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="transition-delay:.6s"/>
+        <line class="glow-ray" pathLength="1" x1="2" y1="10" x2="7" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="transition-delay:.66s"/>
+        <line class="glow-ray" pathLength="1" x1="38" y1="10" x2="33" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="transition-delay:.72s"/>
+      </symbol>
+
+      <symbol id="doodle-house" viewBox="0 0 64 56">
+        <path pathLength="1" d="M4 27 L32 6 L60 27" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path pathLength="1" d="M12 20 L16 17 M20 15 L24 12 M40 12 L44 15 M48 17 L52 20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" style="transition-delay:.15s"/>
+        <path pathLength="1" d="M10 27 V50 H54 V27" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="transition-delay:.28s"/>
+        <rect pathLength="1" x="27" y="36" width="10" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" style="transition-delay:.45s"/>
+        <rect pathLength="1" x="16" y="31" width="8" height="8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" style="transition-delay:.55s"/>
+        <path pathLength="1" d="M16 35 H24 M20 31 V39" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" style="transition-delay:.62s"/>
+      </symbol>
+
+      <symbol id="doodle-person-laptop" viewBox="0 0 64 64">
+        <circle pathLength="1" cx="32" cy="15" r="9" fill="none" stroke="currentColor" stroke-width="2.5"/>
+        <path pathLength="1" d="M23 11 C25 4 39 4 41 11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="transition-delay:.12s"/>
+        <path pathLength="1" d="M14 40 C14 27 22 23 32 23 C42 23 50 27 50 40" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="transition-delay:.24s"/>
+        <rect pathLength="1" x="18" y="33" width="28" height="19" rx="2" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linejoin="round" style="transition-delay:.4s"/>
+        <path pathLength="1" d="M12 55 H52" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" style="transition-delay:.55s"/>
+        <rect x="27" y="38" width="10" height="10" rx="2" fill="currentColor" stroke="none" style="transition-delay:.65s"/>
+        <path d="M29 47 V39 L35 47 V39" fill="none" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+    </defs>
+  </svg>
+
   <!-- ============ NAV ============ -->
   <header class="nav" id="top">
     <div class="nav__inner">
@@ -31,6 +81,15 @@
   <main>
     <!-- ============ HERO ============ -->
     <section class="hero reveal" id="hero">
+      <div class="doodle-field" aria-hidden="true">
+        <svg class="doodle doodle-float" style="--x:2%; --y:4%; --s:1; --delay:0s; --dur:7.5s" viewBox="0 0 80 46"><use href="#doodle-cloud"/></svg>
+        <svg class="doodle doodle-float" style="--x:66%; --y:0%; --s:.85; --delay:.7s; --dur:8.5s" viewBox="0 0 80 46"><use href="#doodle-cloud"/></svg>
+        <svg class="doodle doodle-float" style="--x:86%; --y:20%; --s:.6; --delay:1.4s; --dur:6.5s" viewBox="0 0 80 46"><use href="#doodle-cloud"/></svg>
+        <svg class="doodle doodle-float" style="--x:46%; --y:26%; --s:.7; --delay:.3s; --dur:9s" viewBox="0 0 80 46"><use href="#doodle-cloud"/></svg>
+        <svg class="doodle doodle-twinkle" style="--x:58%; --y:8%; --s:1; --delay:.2s; --dur:2.6s" viewBox="0 0 24 24"><use href="#doodle-sparkle"/></svg>
+        <svg class="doodle doodle-twinkle" style="--x:79%; --y:34%; --s:.75; --delay:1s; --dur:2.1s" viewBox="0 0 24 24"><use href="#doodle-sparkle"/></svg>
+        <svg class="doodle doodle-twinkle" style="--x:93%; --y:10%; --s:.55; --delay:.55s; --dur:2.9s" viewBox="0 0 24 24"><use href="#doodle-sparkle"/></svg>
+      </div>
       <p class="eyebrow">Careers &middot; Engineering</p>
       <h1 class="hero__title">Software Engineer,<br/>Early Career</h1>
       <p class="hero__lede">
@@ -55,7 +114,10 @@
 
     <!-- ============ WHAT'S UNIQUE ============ -->
     <section class="section reveal" id="unique">
-      <span class="section__icon" aria-hidden="true">✨</span>
+      <span class="section__icon section__icon--sparkles" aria-hidden="true">
+        <svg class="doodle doodle-twinkle" style="--dur:2.4s" viewBox="0 0 24 24"><use href="#doodle-sparkle"/></svg>
+        <svg class="doodle doodle-twinkle" style="--dur:2.9s; --delay:.5s" viewBox="0 0 24 24"><use href="#doodle-sparkle"/></svg>
+      </span>
       <h2 class="section__title">What&rsquo;s unique about our early career program?</h2>
       <div class="section__body">
         <p>
@@ -104,7 +166,7 @@
         <!-- Stage 2 -->
         <li class="timeline__item reveal" data-stage="2">
           <div class="timeline__marker">
-            <span class="timeline__emoji" aria-hidden="true">🧑‍💻</span>
+            <svg class="doodle doodle-draw doodle-marker" aria-hidden="true" viewBox="0 0 64 64"><use href="#doodle-person-laptop"/></svg>
           </div>
           <div class="timeline__content">
             <div class="timeline__head">
@@ -139,7 +201,7 @@
         <!-- Stage 3 -->
         <li class="timeline__item reveal" data-stage="3">
           <div class="timeline__marker">
-            <span class="timeline__emoji" aria-hidden="true">🏠</span>
+            <svg class="doodle doodle-draw doodle-marker" aria-hidden="true" viewBox="0 0 64 56"><use href="#doodle-house"/></svg>
           </div>
           <div class="timeline__content">
             <div class="timeline__head">
@@ -148,7 +210,7 @@
             </div>
 
             <div class="callout callout--yellow">
-              <span class="callout__icon" aria-hidden="true">💡</span>
+              <svg class="doodle doodle-draw doodle-lightbulb callout__icon" aria-hidden="true" viewBox="0 0 40 58"><use href="#doodle-lightbulb"/></svg>
               <p>
                 While we are big fans of AI and the potential it unlocks, we kindly ask you refrain
                 from using tools like ChatGPT, Gemini, Claude, or agentic coding tools or similar to
@@ -190,7 +252,28 @@
         <!-- Stage 4 -->
         <li class="timeline__item reveal" data-stage="4">
           <div class="timeline__marker">
-            <span class="timeline__emoji" aria-hidden="true">🎉</span>
+            <svg class="doodle doodle-draw doodle-marker doodle-partypopper" aria-hidden="true" viewBox="0 0 64 64">
+              <path pathLength="1" d="M8 56 L26 20 L33 24 L15 60 Z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path pathLength="1" d="M14 44 L24 30 M12 50 L23 35" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" style="transition-delay:.2s"/>
+              <g class="confetti-piece" style="--dx:10px; --dy:-16px; --delay:.55s">
+                <line pathLength="1" x1="30" y1="18" x2="26" y2="10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </g>
+              <g class="confetti-piece" style="--dx:24px; --dy:-6px; --delay:.65s">
+                <line pathLength="1" x1="34" y1="22" x2="44" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </g>
+              <g class="confetti-piece" style="--dx:18px; --dy:12px; --delay:.75s">
+                <circle pathLength="1" cx="42" cy="32" r="2.4" fill="currentColor" stroke="none"/>
+              </g>
+              <g class="confetti-piece" style="--dx:4px; --dy:24px; --delay:.85s">
+                <circle pathLength="1" cx="28" cy="46" r="2" fill="currentColor" stroke="none"/>
+              </g>
+              <g class="confetti-piece confetti-piece--n" style="--dx:28px; --dy:-22px; --delay:.6s">
+                <path pathLength="1" d="M38 10 L38 2 L44 10 L44 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </g>
+              <g class="confetti-piece confetti-piece--n" style="--dx:32px; --dy:8px; --delay:.7s">
+                <path pathLength="1" d="M50 26 L50 19 L55 26 L55 19" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </g>
+            </svg>
           </div>
           <div class="timeline__content">
             <div class="timeline__head">
@@ -251,7 +334,7 @@
       </ol>
 
       <div class="callout callout--gray">
-        <span class="callout__icon" aria-hidden="true">💡</span>
+        <svg class="doodle doodle-draw doodle-lightbulb callout__icon" aria-hidden="true" viewBox="0 0 40 58"><use href="#doodle-lightbulb"/></svg>
         <p>We want everyone who interviews with us to feel set up for success. Please reach out if you have questions!</p>
       </div>
 

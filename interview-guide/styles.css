@@ -117,7 +117,7 @@ code {
 /* ---------- Layout ---------- */
 main { max-width: 780px; margin: 0 auto; padding: 0 24px; }
 
-.hero { padding: 64px 0 40px; }
+.hero { padding: 64px 0 40px; position: relative; }
 
 .eyebrow {
   font-size: 13px;
@@ -211,6 +211,10 @@ main { max-width: 780px; margin: 0 auto; padding: 0 24px; }
 
 .section__icon { font-size: 28px; display: block; margin-bottom: 12px; }
 
+.section__icon--sparkles { display: flex; gap: 6px; align-items: flex-end; }
+.section__icon--sparkles .doodle { width: 22px; height: 22px; color: var(--n-yellow); }
+.section__icon--sparkles .doodle:last-child { width: 15px; height: 15px; }
+
 .section__title {
   font-size: 24px;
   font-weight: 700;
@@ -240,6 +244,8 @@ main { max-width: 780px; margin: 0 auto; padding: 0 24px; }
 .callout p { margin: 0; }
 
 .callout__icon { font-size: 18px; line-height: 1.4; flex: 0 0 auto; }
+
+svg.callout__icon { width: 20px; height: 29px; color: currentColor; margin-top: -2px; }
 
 .callout--blue { background: var(--n-blue-bg); color: #0b4a63; }
 .callout--yellow { background: var(--n-yellow-bg); color: #6b5301; }
@@ -286,6 +292,8 @@ main { max-width: 780px; margin: 0 auto; padding: 0 24px; }
 }
 
 .timeline__emoji { font-size: 20px; }
+
+.doodle-marker { width: 27px; height: 27px; color: var(--n-black); }
 
 .timeline__content { flex: 1 1 auto; padding-top: 4px; }
 
@@ -426,9 +434,108 @@ main { max-width: 780px; margin: 0 auto; padding: 0 24px; }
   transform: translateY(0);
 }
 
+/* ==========================================================================
+   Doodle icons — hand-drawn accents from the reference sketch
+   Base sizing/color, ambient hero drift + twinkle, and the "drawn on"
+   stroke reveal (.doodle-draw) that piggybacks on the same .is-visible
+   toggle the reveal system above already sets on scroll.
+   ========================================================================== */
+.doodle { overflow: visible; }
+
+.doodle-field {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.doodle-field .doodle {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: calc(46px * var(--s, 1));
+  height: calc(46px * var(--s, 1));
+  color: var(--n-black);
+  opacity: 0.3;
+}
+
+@keyframes doodle-drift {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(2deg); }
+}
+
+@keyframes doodle-twinkle {
+  0%, 100% { opacity: 0.25; transform: scale(0.85); }
+  50% { opacity: 0.85; transform: scale(1); }
+}
+
+.doodle-float { animation: doodle-drift var(--dur, 7s) ease-in-out infinite; animation-delay: var(--delay, 0s); }
+.doodle-twinkle { animation: doodle-twinkle var(--dur, 2.4s) ease-in-out infinite; animation-delay: var(--delay, 0s); }
+
+/* Stroke "drawn on" reveal — pairs pathLength="1" (set in the markup) with
+   a dasharray/dashoffset transition, so it just works with the reveal
+   system's existing .is-visible toggle. */
+.doodle-draw path,
+.doodle-draw line,
+.doodle-draw circle,
+.doodle-draw rect {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 0.8s var(--ease);
+}
+
+.is-visible .doodle-draw path,
+.is-visible .doodle-draw line,
+.is-visible .doodle-draw circle,
+.is-visible .doodle-draw rect {
+  stroke-dashoffset: 0;
+}
+
+/* Lightbulb: once drawn, its glow rays pulse gently forever. */
+@keyframes doodle-glow {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+
+.is-visible .doodle-lightbulb .glow-ray {
+  animation: doodle-glow 1.8s ease-in-out infinite;
+  animation-delay: 1.4s;
+}
+
+/* Party popper: confetti pieces pop outward from the cone after it draws. */
+.confetti-piece {
+  transform: translate(0, 0) scale(0);
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.45s var(--ease), opacity 0.3s linear;
+  transition-delay: var(--delay, 0.5s);
+}
+
+.is-visible .confetti-piece {
+  transform: translate(var(--dx), var(--dy)) scale(1);
+  opacity: 1;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reveal, .video-card { transition: none !important; }
   .reveal { opacity: 1; transform: none; }
+
+  .doodle-float, .doodle-twinkle, .is-visible .doodle-lightbulb .glow-ray {
+    animation: none !important;
+  }
+
+  .doodle-draw path, .doodle-draw line, .doodle-draw circle, .doodle-draw rect,
+  .confetti-piece {
+    transition: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+
+  .confetti-piece {
+    transform: translate(var(--dx), var(--dy)) scale(1) !important;
+    opacity: 1 !important;
+  }
 }
 
 /* ---------- Responsive ---------- */
